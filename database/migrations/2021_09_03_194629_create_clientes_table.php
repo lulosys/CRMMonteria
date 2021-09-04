@@ -17,7 +17,7 @@ class CreateClientesTable extends Migration
             $table->id();
             $table->string('nombre','45');
             $table->string('apellido','45');
-            $table->string('telefono','20')->nullable(true);
+            $table->unsignedBigInteger('telefono')->nullable(true);
             $table->string('correo','50')->nullable(true);
             $table->unsignedInteger('empresas_id');
             $table->unsignedInteger('destino_id');

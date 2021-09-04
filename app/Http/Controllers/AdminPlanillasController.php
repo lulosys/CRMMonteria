@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-	use Session;
+    use Session;
 	use Request;
 	use DB;
 	use CRUDBooster;
@@ -31,21 +31,25 @@
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label"=>"Fecha","name"=>"fecha"];
-			$this->col[] = ["label"=>"Paciente","name"=>"client_id","join"=>"clientes,id"];
-			$this->col[] = ["label"=>"Usuario","name"=>"user_id","join"=>"cms_users,id"];
+			$this->col[] = ["label"=>"Paciente","name"=>"(select concat(c.nombre,' - ',c.apellido) from clientes c where c.id = planillas.client_id) as client_id"];
+			$this->col[] = ["label"=>"Usuario","name"=>"user_id","join"=>"cms_users,name"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Fecha','name'=>'fecha','type'=>'datetime','validation'=>'required|date_format:Y-m-d H:i:s','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Paciente','name'=>'client_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'clientes,nombre','datatable_orig'=>'rutas|origen|[destino_id]'];
-			$this->form[] = ['label'=>'Usuario','name'=>'user_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_format'=>'name'];
+			$this->form[] = ['label'=>'Paciente','name'=>'client_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'clientes,nombre','datatable_format'=>'nombre,\' \',apellido'];
+			$this->form[] = ['label'=>'Usuario','name'=>'user_id','type'=>'hidden','value'=> CRUDBooster::myId(), 'validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+            $columns[] = ['label'=>'Carro','name'=>'carro_id','type'=>'select','datatable'=>'carros,placa','datatable_format'=>'placa,\' - \',marca','required'=>true];
+            $columns[] = ['label'=>'Ruta','name'=>'ruta_id','type'=>'datamodal','datamodal_table'=>'rutas','datamodal_columns'=>'origen,destino,precio','datamodal_select_to'=>'precio:precio','datamodal_columns_alias'=>'Origen,Destino,Precio','required'=>true];
+            $columns[] = ['label'=>'Precio','name'=>'precio','type'=>'number'];
+            $this->form[] = ['label'=>'Orders Detail','name'=>'orders_detail','type'=>'child','columns'=>$columns,'table'=>'detalles_planilla_rutas','foreign_key'=>'planilla_id'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
 			//$this->form[] = ['label'=>'Fecha','name'=>'fecha','type'=>'datetime','validation'=>'required|date_format:Y-m-d H:i:s','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Paciente','name'=>'client_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'clientes,nombre','datatable_format'=>'nombre,\' \',apellido,\' \',rutas','datatable_orig'=>'rutas|origen|[destino_id]'];
+			//$this->form[] = ['label'=>'Paciente','name'=>'client_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'clientes,nombre','datatable_orig'=>'rutas|origen|[destino_id]'];
 			//$this->form[] = ['label'=>'Usuario','name'=>'user_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'cms_users,name','datatable_format'=>'name'];
 			# OLD END FORM
 
@@ -146,8 +150,7 @@
 	        | $this->script_js = "function() { ... }";
 	        |
 	        */
-	        $this->script_js = NULL;
-
+            $this->script_js = "";
 
             /*
 	        | ---------------------------------------------------------------------- 

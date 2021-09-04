@@ -33,7 +33,7 @@
 			$this->col[] = ["label"=>"Marca","name"=>"marca"];
 			$this->col[] = ["label"=>"Modelo","name"=>"modelo"];
 			$this->col[] = ["label"=>"Placa","name"=>"placa"];
-			$this->col[] = ["label"=>"Conductor","name"=>"conductor_id","join"=>"conductores,id"];
+			$this->col[] = ["label"=>"Conductor","name"=>"(select concat(conductores.nombre,' - ',conductores.apellido) from conductores where conductores.id = carros.conductor_id) as conductor_id"];
 			$this->col[] = ["label"=>"Capacidad Pasajeros","name"=>"capacidad_pasajeros"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
@@ -42,7 +42,7 @@
 			$this->form[] = ['label'=>'Marca','name'=>'marca','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Modelo','name'=>'modelo','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Placa','name'=>'placa','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Conductor','name'=>'conductor_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'conductores,id'];
+			$this->form[] = ['label'=>'Conductor','name'=>'conductor_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'conductores,nombre','datatable_format'=>'nombre,\' \',apellido'];
 			$this->form[] = ['label'=>'Capacidad Pasajeros','name'=>'capacidad_pasajeros','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
