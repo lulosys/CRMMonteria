@@ -21,7 +21,7 @@ class CreateClientesTable extends Migration
             $table->string('correo','50')->nullable(true);
             $table->unsignedInteger('empresas_id');
             $table->unsignedInteger('destino_id');
-            $table->boolean('tipo')->comment('fijo,ocacional');
+            $table->string('tipo')->comment('fijo,ocacional');
             $table->timestamps();
         });
     }
