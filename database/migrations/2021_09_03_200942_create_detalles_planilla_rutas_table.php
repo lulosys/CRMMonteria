@@ -15,6 +15,9 @@ class CreateDetallesPlanillaRutasTable extends Migration
     {
         Schema::create('detalles_planilla_rutas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('planilla_id');
+            $table->unsignedInteger('ruta_id');
+            $table->unsignedInteger('carro_id');
             $table->timestamps();
         });
     }
