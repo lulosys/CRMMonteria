@@ -32,7 +32,7 @@
 			$this->col = [];
 			$this->col[] = ["label"=>"Fecha","name"=>"fecha"];
 			$this->col[] = ["label"=>"Paciente","name"=>"(select concat(c.nombre,' - ',c.apellido) from clientes c where c.id = planillas.client_id) as client_id"];
-			$this->col[] = ["label"=>"Usuario","name"=>"user_id","join"=>"cms_users,name"];
+			//$this->col[] = ["label"=>"Usuario","name"=>"user_id","join"=>"cms_users,name"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -40,7 +40,8 @@
 			$this->form[] = ['label'=>'Fecha','name'=>'fecha','type'=>'datetime','validation'=>'required|date_format:Y-m-d H:i:s','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Paciente','name'=>'client_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'clientes,nombre','datatable_format'=>'nombre,\' \',apellido'];
 			$this->form[] = ['label'=>'Usuario','name'=>'user_id','type'=>'hidden','value'=> CRUDBooster::myId(), 'validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-            $columns[] = ['label'=>'Carro','name'=>'carro_id','type'=>'select','datatable'=>'carros,placa','datatable_format'=>'placa,\' - \',marca','required'=>true];
+            $this->form[] = ['label'=>'Autorizacion','name'=>'autorizacion','type'=>'text', 'validation'=>'required|integer|min:0|unique:planillas','width'=>'col-sm-10'];
+            $columns[] = ['label'=>'Carro','name'=>'carro_id','type'=>'select','datatable'=>'carros,placa','datatable_format'=>'placa,\' - \',marca','required'=>true,'width'=>'col-sm-5'];
             $columns[] = ['label'=>'Ruta','name'=>'ruta_id','type'=>'datamodal','datamodal_table'=>'rutas','datamodal_columns'=>'origen,destino,precio','datamodal_select_to'=>'precio:precio','datamodal_columns_alias'=>'Origen,Destino,Precio','required'=>true];
             $columns[] = ['label'=>'Precio','name'=>'precio','type'=>'number'];
             $this->form[] = ['label'=>'Orders Detail','name'=>'orders_detail','type'=>'child','columns'=>$columns,'table'=>'detalles_planilla_rutas','foreign_key'=>'planilla_id'];
@@ -322,10 +323,31 @@
 	        //Your code here
 
 	    }
+//
+//        public function getIndex() {
+//            if(!CRUDBooster::isView()) CRUDBooster::redirect(CRUDBooster::adminPath(),trans('crudbooster.denied_access'));
+//
+//            $data = [];
+//            $data['page_title'] = 'Products Data';
+//
+//            return $this->view('planillas.index',$data);
+//        }
+/*
+select group_concat(p.autorizacion)      autorizacion,
+       concat(c.tipo_doc, c.cedula)      CCafiliado,
+       concat(c.nombre, ' ', c.apellido) nombre,
+       c.telefono,
+       concat(r.origen, ' ', r.destino)  rutas,
+       group_concat(day(p.fecha))        dias,
+       count(r.precio)                   cantidad_servicio,
+       sum(r.precio)                     total
+from planillas p
+         inner join clientes c on p.client_id = c.id
+         inner join detalles_planilla_rutas dpr on p.id = dpr.planilla_id
+         inner join empresas e on c.empresas_id = e.id
+         inner join carros ca on dpr.carro_id = ca.id
+         inner join rutas r on dpr.ruta_id = r.id
+group by c.id, r.id;
 
-
-
-	    //By the way, you can still create your own method in here... :) 
-
-
+*/
 	}

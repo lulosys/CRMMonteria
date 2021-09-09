@@ -18,6 +18,7 @@ class CreatePlanillasTable extends Migration
             $table->dateTime('fecha');
             $table->unsignedInteger('client_id');
             $table->unsignedInteger('user_id');
+            $table->string('autorizacion');
             $table->timestamps();
         });
     }
