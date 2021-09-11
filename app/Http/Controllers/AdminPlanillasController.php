@@ -119,7 +119,7 @@
 	        | @icon  = Icon from Awesome.
 	        | 
 	        */
-	        $this->index_button = array();
+	        $this->index_button[] = ['label'=>'Reporte Final','url'=> url("admin/reportefindemes"),"icon"=>"fa fa-print"];
 
 
 
