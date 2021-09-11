@@ -43,7 +43,7 @@
 			$this->form[] = ['label'=>'Usuario','name'=>'user_id','type'=>'hidden','value'=> CRUDBooster::myId(), 'validation'=>'required|integer|min:0','width'=>'col-sm-10'];
             $this->form[] = ['label'=>'Autorizacion','name'=>'autorizacion','type'=>'text', 'validation'=>'required|integer|min:0|unique:planillas','width'=>'col-sm-10'];
             $columns[] = ['label'=>'Carro','name'=>'carro_id','type'=>'select','datatable'=>'carros,placa','datatable_format'=>'placa,\' - \',marca','required'=>true,'width'=>'col-sm-5'];
-            $columns[] = ['label'=>'Ruta','name'=>'ruta_id','type'=>'datamodal','datamodal_table'=>'rutas','datamodal_columns'=>'origen,destino,precio','datamodal_select_to'=>'precio:precio','datamodal_columns_alias'=>'Origen,Destino,Precio','required'=>true];
+            $columns[] = ['label'=>'Ruta','name'=>'ruta_id','type'=>'datamodal','datamodal_table'=>'rutas','datamodal_columns'=>'origen,precio','datamodal_select_to'=>'precio:precio','datamodal_columns_alias'=>'Rutas,Precio','required'=>true];
             $columns[] = ['label'=>'Precio','name'=>'precio','type'=>'number'];
             $this->form[] = ['label'=>'Orders Detail','name'=>'orders_detail','type'=>'child','columns'=>$columns,'table'=>'detalles_planilla_rutas','foreign_key'=>'planilla_id'];
             $this->form[] = ['label'=>'Total','name'=>'total','type'=>'number','readonly'=>true];

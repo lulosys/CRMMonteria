@@ -30,15 +30,15 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
-			$this->col[] = ["label"=>"Origen","name"=>"origen"];
-			$this->col[] = ["label"=>"Destino","name"=>"destino"];
+			$this->col[] = ["label"=>"Ruta","name"=>"origen"];
+			//$this->col[] = ["label"=>"Destino","name"=>"destino"];
 			$this->col[] = ["label"=>"Precio","name"=>"precio"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
-			$this->form[] = ['label'=>'Origen','name'=>'origen','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Destino','name'=>'destino','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Ruta','name'=>'origen','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+			//$this->form[] = ['label'=>'Destino','name'=>'destino','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Precio','name'=>'precio','type'=>'number','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
 			# END FORM DO NOT REMOVE THIS LINE
 
