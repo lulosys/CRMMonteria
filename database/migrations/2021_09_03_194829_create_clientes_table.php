@@ -21,9 +21,23 @@ class CreateClientesTable extends Migration
             $table->string('tipo_doc');
             $table->unsignedBigInteger('telefono')->nullable(true);
             $table->string('correo','50')->nullable(true);
-            $table->unsignedInteger('empresas_id');
-            $table->unsignedInteger('destino_id');
-            $table->string('tipo')->comment('fijo,ocacional');
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')
+                ->references('id')
+                ->on('empresas')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->unsignedBigInteger('destino_id');
+            $table->foreign('destino_id')
+                ->references('id')
+                ->on('rutas')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->boolean('has_acompanante');
+            $table->boolean('has_discapacitado');
+            $table->string('tipo')
+                ->comment('fijo,ocacional,tutela');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

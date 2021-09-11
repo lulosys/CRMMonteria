@@ -16,9 +16,16 @@ class CreatePlanillasTable extends Migration
         Schema::create('planillas', function (Blueprint $table) {
             $table->id();
             $table->dateTime('fecha');
-            $table->unsignedInteger('client_id');
-            $table->unsignedInteger('user_id');
-            $table->string('autorizacion');
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')
+                ->references('id')
+                ->on('clientes')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->string('autorizacion')->nullable();
+            $table->unsignedBigInteger('total')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

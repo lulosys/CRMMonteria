@@ -18,6 +18,7 @@ class CreateRutasTable extends Migration
             $table->string('origen',50);
             $table->string('destino',50);
             $table->unsignedInteger('precio');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

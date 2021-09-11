@@ -18,8 +18,14 @@ class CreateCarrosTable extends Migration
             $table->string('marca','45');
             $table->unsignedInteger('modelo');
             $table->string('placa','7');
-            $table->unsignedInteger('conductor_id');
+            $table->unsignedBigInteger('conductor_id');
+            $table->foreign('conductor_id')
+                ->references('id')
+                ->on('conductores')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->unsignedInteger('capacidad_pasajeros');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -36,9 +36,21 @@
 			$this->col[] = ["label"=>"Tipo Doc","name"=>"tipo_doc"];
 			$this->col[] = ["label"=>"Cedula","name"=>"cedula"];
 			$this->col[] = ["label"=>"Correo","name"=>"correo"];
-			$this->col[] = ["label"=>"Empresa","name"=>"empresas_id","join"=>"empresas,nombre"];
+			$this->col[] = ["label"=>"Empresa","name"=>"empresa_id","join"=>"empresas,nombre"];
 			$this->col[] = ["label"=>"Destino","name"=>"(select concat(rutas.origen,' - ',rutas.destino) from rutas where rutas.id = clientes.destino_id) as destino_id"];
 			$this->col[] = ["label"=>"Tipo","name"=>"tipo","callback_php"=>'ucfirst($row->tipo)'];
+			$this->col[] = ["label"=>"Acompanante","name"=>"has_acompanante","callback"=> function($row) {
+                if($row->has_acompanante){
+                  return 'Si';
+                }
+                return 'No';
+            }];
+			$this->col[] = ["label"=>"Discapacitado","name"=>"has_discapacitado","callback"=> function($row) {
+                if($row->has_discapacitado){
+                    return 'Si';
+                }
+                return 'No';
+            }];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -49,9 +61,11 @@
 			$this->form[] = ['label'=>'Cedula','name'=>'cedula','type'=>'number','validation'=>'required|numeric|unique:clientes','width'=>'col-sm-9'];
 			$this->form[] = ['label'=>'Telefono','name'=>'telefono','type'=>'number','validation'=>'required|integer','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Correo','name'=>'correo','type'=>'text','validation'=>'min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Empresas','name'=>'empresas_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'empresas,nombre'];
+			$this->form[] = ['label'=>'Empresas','name'=>'empresa_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'empresas,nombre'];
 			$this->form[] = ['label'=>'Destino','name'=>'destino_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'rutas,origen'];
-			$this->form[] = ['label'=>'Tipo','name'=>'tipo','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'fijo;ocasional'];
+			$this->form[] = ['label'=>'Tipo','name'=>'tipo','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'fijo;ocasional;tutela'];
+			$this->form[] = ['label'=>'Acompanante','name'=>'has_acompanante','type'=>'radio','validation'=>'required','width'=>'col-sm-9','dataenum'=>'1|Si;0|No'];
+			$this->form[] = ['label'=>'Discapacitado','name'=>'has_discapacitado','type'=>'radio','validation'=>'required','width'=>'col-sm-9','dataenum'=>'1|Si;0|No'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
@@ -59,12 +73,12 @@
 			//$this->form[] = ['label'=>'Nombre','name'=>'nombre','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'Apellido','name'=>'apellido','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'Tipo Doc','name'=>'tipo_doc','type'=>'select','validation'=>'required','width'=>'col-sm-9','dataenum'=>'CC;TI;RC;OTRO'];
-			//$this->form[] = ['label'=>'Cedula','name'=>'cedula','type'=>'number','validation'=>'required|numeric','width'=>'col-sm-9'];
+			//$this->form[] = ['label'=>'Cedula','name'=>'cedula','type'=>'number','validation'=>'required|numeric|unique:clientes','width'=>'col-sm-9'];
 			//$this->form[] = ['label'=>'Telefono','name'=>'telefono','type'=>'number','validation'=>'required|integer','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'Correo','name'=>'correo','type'=>'text','validation'=>'min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Empresas','name'=>'empresas_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'empresas,nombre'];
+			//$this->form[] = ['label'=>'Empresas','name'=>'empresa_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'empresas,nombre'];
 			//$this->form[] = ['label'=>'Destino','name'=>'destino_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'rutas,origen'];
-			//$this->form[] = ['label'=>'Tipo','name'=>'tipo','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'fijo;ocasional'];
+			//$this->form[] = ['label'=>'Tipo','name'=>'tipo','type'=>'select','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'fijo;ocasional,tutela'];
 			# OLD END FORM
 
 			/* 

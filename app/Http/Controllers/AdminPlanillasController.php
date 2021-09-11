@@ -32,7 +32,8 @@
 			$this->col = [];
 			$this->col[] = ["label"=>"Fecha","name"=>"fecha"];
 			$this->col[] = ["label"=>"Paciente","name"=>"(select concat(c.nombre,' - ',c.apellido) from clientes c where c.id = planillas.client_id) as client_id"];
-			//$this->col[] = ["label"=>"Usuario","name"=>"user_id","join"=>"cms_users,name"];
+            $this->col[] = ["label"=>"Precio","name"=>"total"];
+            //$this->col[] = ["label"=>"Usuario","name"=>"user_id","join"=>"cms_users,name"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -45,7 +46,8 @@
             $columns[] = ['label'=>'Ruta','name'=>'ruta_id','type'=>'datamodal','datamodal_table'=>'rutas','datamodal_columns'=>'origen,destino,precio','datamodal_select_to'=>'precio:precio','datamodal_columns_alias'=>'Origen,Destino,Precio','required'=>true];
             $columns[] = ['label'=>'Precio','name'=>'precio','type'=>'number'];
             $this->form[] = ['label'=>'Orders Detail','name'=>'orders_detail','type'=>'child','columns'=>$columns,'table'=>'detalles_planilla_rutas','foreign_key'=>'planilla_id'];
-			# END FORM DO NOT REMOVE THIS LINE
+            $this->form[] = ['label'=>'Total','name'=>'total','type'=>'number','readonly'=>true];
+            # END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
@@ -151,7 +153,18 @@
 	        | $this->script_js = "function() { ... }";
 	        |
 	        */
-            $this->script_js = "";
+            $this->script_js = "
+            $(function() {
+	        		
+	        		setInterval(function() {
+	        			var total = 0;
+	        			$('#table-ordersdetail tbody .precio').each(function() {
+	        				total += parseInt($(this).text());
+	        			})
+
+	        			$('#total').val(total);
+	        		},500);
+	        	})";
 
             /*
 	        | ---------------------------------------------------------------------- 
