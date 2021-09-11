@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ReporteFinalController;
+use crocodicstudio\crudbooster\helpers\CRUDBooster;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
