@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ReporteFinalController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return response()->redirectTo('admin');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/reportefindemes', ReporteFinalController::class);
 });
