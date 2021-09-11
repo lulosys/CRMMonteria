@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class ReporteFinalController extends Controller
 {
-    public function __construct()
-    {
-        //if(!CRUDBooster::isSuperadmin()) CRUDBooster::redirect(CRUDBooster::adminPath(),trans('crudbooster.denied_access'));
-
-    }
 
     /**
      * Handle the incoming request.
@@ -22,12 +17,16 @@ class ReporteFinalController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $filter =$request->all();
-        $date_filter_start = ! empty($filter['created_at_start'])
+        if ((int) CRUDBooster::myPrivilegeId() != 1) {
+            CRUDBooster::redirect(CRUDBooster::adminPath(), trans('crudbooster.denied_access'));
+        }
+
+        $filter = $request->all();
+        $date_filter_start = !empty($filter['created_at_start'])
             ? date_create_from_format('d/m/Y', $filter['created_at_start'])
             : new DateTime();
 
-        $date_filter_end = ! empty($filter['created_at_end'])
+        $date_filter_end = !empty($filter['created_at_end'])
             ? date_create_from_format('d/m/Y', $filter['created_at_end'])
             : new DateTime();
 
@@ -50,6 +49,6 @@ from planillas p
          inner join rutas r on dpr.ruta_id = r.id
     where DATE(p.fecha) between '".$date_filter_start->format('Y-m-d')."' and '".$date_filter_end->format('Y-m-d')."'
 group by c.id, r.id");
-        return view('planillas.index',compact('pacientes','date_filter_start', 'date_filter_end'));
+        return view('planillas.index', compact('pacientes', 'date_filter_start', 'date_filter_end'));
     }
 }
