@@ -15,8 +15,8 @@ class CreateRutasTable extends Migration
     {
         Schema::create('rutas', function (Blueprint $table) {
             $table->id();
-            $table->string('origen',50);
-            $table->string('destino',50)->nullable();
+            $table->string('origen',200);
+            $table->string('destino',200)->nullable();
             $table->unsignedInteger('precio');
             $table->softDeletes();
             $table->timestamps();
